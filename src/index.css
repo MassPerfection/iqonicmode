@@ -174,7 +174,8 @@
     filter: none;
   }
 
-  .fireworks {
+  .fireworks,
+  .mark-finale {
     display: none;
   }
 }
@@ -278,8 +279,93 @@
 .mark-ring,
 .mark-gem,
 .mark-burst,
-.mark-spark {
+.mark-spark,
+.mark-finale,
+.mark-finale-glow,
+.mark-finale-spark {
   position: absolute;
+}
+
+.mark-finale {
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  z-index: 4;
+}
+
+.mark-finale-glow {
+  top: 0;
+  left: 0;
+  width: 16rem;
+  height: 16rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, color-mix(in oklab, var(--color-gilt) 72%, white) 0%, transparent 68%);
+  animation: finale-glow 500ms ease-out both;
+}
+
+.mark-finale-spark {
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-gilt);
+  box-shadow: 0 0 10px var(--color-gilt);
+  animation: finale-spark 500ms ease-out both;
+}
+
+.mark-finale-spark:nth-child(3n) {
+  background: white;
+  width: 4px;
+  height: 4px;
+}
+
+.mark-finale-spark:nth-child(2n) {
+  background: var(--color-gold);
+}
+
+.mark--complete .mark-gem {
+  animation: finale-gem 500ms ease-out both;
+}
+
+@keyframes finale-glow {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.35);
+  }
+  28% {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+@keyframes finale-spark {
+  0% {
+    opacity: 0;
+    transform: rotate(var(--angle)) translateY(1.5rem) scale(0.4);
+  }
+  22% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(var(--angle)) translateY(10rem) scale(1);
+  }
+}
+
+@keyframes finale-gem {
+  0%,
+  100% {
+    filter: none;
+  }
+  30% {
+    filter: drop-shadow(0 0 18px var(--color-gilt));
+  }
 }
 
 .mark-burst {

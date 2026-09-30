@@ -8,16 +8,25 @@ import {
 } from "../content";
 import { Button, Card, Eyebrow, Reveal, Section, SectionHeading, usePageMeta } from "../components/ui";
 
-function EvolvingMark() {
+function EvolvingMark({ complete }) {
   const sparks = Array.from({ length: 8 }, (_, index) => index * 45);
+  const finale = Array.from({ length: 14 }, (_, index) => index * (360 / 14));
 
   return (
-    <div className="mark">
+    <div className={complete ? "mark mark--complete" : "mark"}>
       <div className="mark-burst" aria-hidden="true">
         {sparks.map((angle) => (
           <span key={angle} className="mark-spark" style={{ "--angle": `${angle}deg` }} />
         ))}
       </div>
+      {complete ? (
+        <div className="mark-finale" aria-hidden="true">
+          <span className="mark-finale-glow" />
+          {finale.map((angle) => (
+            <span key={angle} className="mark-finale-spark" style={{ "--angle": `${angle}deg` }} />
+          ))}
+        </div>
+      ) : null}
       <div className="mark-ring mark-ring--outer" />
       <div className="mark-ring mark-ring--inner" />
       <div className="mark-gem" />
@@ -90,7 +99,10 @@ function HeroEntrance() {
 function ActionWords() {
   const ref = useRef(null);
   const stageRef = useRef(null);
+  const armed = useRef(true);
+  const finishTimer = useRef(0);
   const [index, setIndex] = useState(0);
+  const [complete, setComplete] = useState(false);
   const showMark = useWideScreen(768);
 
   useEffect(() => {
@@ -104,11 +116,23 @@ function ActionWords() {
       const next = Math.min(Math.floor(progress * actionWords.length), actionWords.length - 1);
       setIndex((current) => (current === next ? current : next));
       stageRef.current?.style.setProperty("--p", progress.toFixed(4));
+
+      const finished = progress >= 0.985;
+      const motionOk = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (finished && armed.current && motionOk && window.innerWidth >= 768) {
+        armed.current = false;
+        setComplete(true);
+        window.clearTimeout(finishTimer.current);
+        finishTimer.current = window.setTimeout(() => setComplete(false), 520);
+      } else if (progress < 0.9) {
+        armed.current = true;
+      }
     };
     update();
     window.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
     return () => {
+      window.clearTimeout(finishTimer.current);
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
     };
@@ -161,7 +185,7 @@ function ActionWords() {
           </div>
           {showMark ? (
             <div className="action-mark pointer-events-none h-[36vh] lg:order-last lg:h-[70vh]">
-              <EvolvingMark />
+              <EvolvingMark complete={complete} />
             </div>
           ) : null}
         </div>
