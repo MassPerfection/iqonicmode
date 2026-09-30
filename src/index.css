@@ -158,7 +158,6 @@
     transform: none;
   }
 
-  .mark-glow,
   .mark-ring,
   .mark-gem,
   .hero-drift,
@@ -276,25 +275,11 @@
   justify-content: center;
 }
 
-.mark-glow,
 .mark-ring,
 .mark-gem,
 .mark-burst,
-.mark-spark,
-.runway,
-.runway-spot,
-.runway-floor {
+.mark-spark {
   position: absolute;
-}
-
-.mark-glow {
-  width: 46%;
-  height: 46%;
-  border-radius: 999px;
-  background: radial-gradient(circle, color-mix(in oklab, var(--color-gilt) 28%, transparent) 0%, transparent 68%);
-  opacity: clamp(0, calc((var(--p) - 0.12) * 1.1), 0.42);
-  transform: scale(calc(0.7 + var(--p) * 0.25));
-  filter: blur(8px);
 }
 
 .mark-burst {
@@ -342,37 +327,14 @@
   height: min(22%, 7rem);
   background: linear-gradient(135deg, var(--color-gilt), var(--color-gold));
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-  filter: drop-shadow(0 0 calc(4px + var(--p) * 8px) color-mix(in oklab, var(--color-gilt) 45%, transparent));
   transform: rotate(calc(var(--p) * 220deg)) scale(calc(0.7 + var(--p) * 0.38));
   z-index: 2;
 }
 
-.runway {
-  width: min(70%, 22rem);
-  height: min(78%, 26rem);
-  opacity: clamp(0, calc((var(--p) - 0.5) * 2.5), 1);
-}
-
-.runway-floor {
-  left: 50%;
-  bottom: 6%;
-  width: 78%;
-  height: 72%;
-  transform: translateX(-50%);
-  background: linear-gradient(to bottom, transparent, color-mix(in oklab, var(--color-gold) 10%, transparent) 36%, color-mix(in oklab, var(--color-gilt) 32%, transparent));
-  clip-path: polygon(46% 0, 54% 0, 92% 100%, 8% 100%);
-}
-
-.runway-spot {
-  top: 8%;
-  left: 50%;
-  width: 28%;
-  height: 18%;
-  transform: translateX(-50%);
-  border-radius: 999px;
-  background: radial-gradient(circle, color-mix(in oklab, var(--color-gilt) 40%, transparent), transparent 70%);
-  opacity: clamp(0, calc((var(--p) - 0.55) * 1.4), 0.55);
-  filter: blur(6px);
+@media (max-width: 767px) {
+  .action-mark {
+    display: none;
+  }
 }
 
 .hero-copy {

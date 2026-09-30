@@ -13,11 +13,6 @@ function EvolvingMark() {
 
   return (
     <div className="mark">
-      <div className="runway" aria-hidden="true">
-        <span className="runway-floor" />
-        <span className="runway-spot" />
-      </div>
-      <div className="mark-glow" />
       <div className="mark-burst" aria-hidden="true">
         {sparks.map((angle) => (
           <span key={angle} className="mark-spark" style={{ "--angle": `${angle}deg` }} />
@@ -28,6 +23,21 @@ function EvolvingMark() {
       <div className="mark-gem" />
     </div>
   );
+}
+
+function useWideScreen(minWidth) {
+  const query = `(min-width: ${minWidth}px)`;
+  const [wide, setWide] = useState(() => window.matchMedia(query).matches);
+
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    const sync = () => setWide(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, [query]);
+
+  return wide;
 }
 
 function HeroEntrance() {
@@ -81,6 +91,7 @@ function ActionWords() {
   const ref = useRef(null);
   const stageRef = useRef(null);
   const [index, setIndex] = useState(0);
+  const showMark = useWideScreen(768);
 
   useEffect(() => {
     const update = () => {
@@ -119,7 +130,7 @@ function ActionWords() {
               <span className="rule-gold" />
               <span className="eyebrow">The five action words</span>
             </div>
-            <ol className="mt-10 space-y-4 md:space-y-5">
+            <ol className="mt-10 max-md:pr-12 space-y-4 md:space-y-5">
               {actionWords.map((item, itemIndex) => {
                 const active = itemIndex === index;
                 return (
@@ -148,9 +159,11 @@ function ActionWords() {
               })}
             </ol>
           </div>
-          <div className="pointer-events-none order-first h-[36vh] lg:order-last lg:h-[70vh]">
-            <EvolvingMark />
-          </div>
+          {showMark ? (
+            <div className="action-mark pointer-events-none h-[36vh] lg:order-last lg:h-[70vh]">
+              <EvolvingMark />
+            </div>
+          ) : null}
         </div>
       </div>
     </section>
