@@ -211,7 +211,7 @@ export function HomePage() {
 
   return (
     <>
-      <section className="relative isolate flex min-h-screen items-center justify-center overflow-hidden bg-ink px-6 pt-36 pb-24 text-center text-paper md:px-12">
+      <section className="relative isolate flex min-h-screen items-center justify-center overflow-hidden bg-black px-6 pt-36 pb-24 text-center text-paper md:px-12">
         <img
           src={images.hero}
           alt=""

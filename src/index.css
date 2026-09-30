@@ -161,7 +161,11 @@
   .mark-ring,
   .mark-gem,
   .mark-rotor,
-  .hero-drift,
+  .hero-drift {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
   .btn::after,
   .hero-piece,
   .spark {
@@ -542,8 +546,21 @@
 }
 
 .hero-drift {
-  animation: hero-drift 26s ease-in-out infinite alternate;
+  opacity: 0;
+  animation:
+    hero-unveil 5.2s cubic-bezier(0.4, 0, 0.2, 1) both,
+    hero-drift 26s ease-in-out infinite alternate;
   transform-origin: center;
+}
+
+@keyframes hero-unveil {
+  0%,
+  14% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes hero-drift {
