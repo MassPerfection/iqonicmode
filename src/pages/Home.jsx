@@ -8,21 +8,81 @@ import {
 } from "../content";
 import { Button, Card, Eyebrow, Reveal, Section, SectionHeading, usePageMeta } from "../components/ui";
 
-function Diamond({ step }) {
-  const turn = step * 72;
+const orbitLetters = ["C", "S", "W", "L", "I"];
 
+function EvolvingMark() {
   return (
-    <div className="mark" style={{ "--turn": `${turn}deg` }}>
+    <div className="mark">
+      <div className="runway" aria-hidden="true">
+        <span className="runway-floor" />
+        <span className="runway-walker" />
+        <span className="runway-spot" />
+      </div>
       <div className="mark-glow" />
       <div className="mark-ring mark-ring--outer" />
       <div className="mark-ring mark-ring--inner" />
+      <div className="mark-orbit" aria-hidden="true">
+        {orbitLetters.map((letter, letterIndex) => (
+          <span key={letter} className="orbit-slot" style={{ "--orbit": `${letterIndex * 72}deg` }}>
+            <span className="orbit-letter">{letter}</span>
+          </span>
+        ))}
+      </div>
       <div className="mark-gem" />
+    </div>
+  );
+}
+
+function HeroEntrance() {
+  const sparks = Array.from({ length: 16 }, (_, index) => ({
+    angle: index * 22.5,
+    delay: 280 + (index % 8) * 70,
+    distance: 90 + (index % 5) * 36,
+  }));
+
+  return (
+    <div className="hero-copy">
+      <div className="fireworks" aria-hidden="true">
+        {sparks.map((spark) => (
+          <span
+            key={`${spark.angle}-${spark.delay}`}
+            className="spark"
+            style={{ "--angle": `${spark.angle}deg`, "--delay": `${spark.delay}ms`, "--distance": `${spark.distance}px` }}
+          />
+        ))}
+      </div>
+      <div className="hero-piece" style={{ animationDelay: "80ms" }}>
+        <div className="flex justify-center">
+          <Eyebrow>Calgary, Alberta — Nonprofit Society</Eyebrow>
+        </div>
+      </div>
+      <h1 className="hero-piece hero-title mt-10 font-display text-hero">
+        CONNECT.
+        <br />
+        SPEAK. WALK.
+        <br />
+        <span className="text-gilt">LEAD. INSPIRE.</span>
+      </h1>
+      <p className="hero-piece mt-10 max-w-xl text-paper/75" style={{ animationDelay: "620ms" }}>
+        Creating opportunities for children, teens, adults, parents, families, entrepreneurs and community members to learn,
+        participate, connect and grow.
+      </p>
+      <div className="hero-piece mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row" style={{ animationDelay: "860ms" }}>
+        <Button to="/contact">Join IQ-Mode</Button>
+        <Button to="/contact" tone="ghost">
+          Get Involved
+        </Button>
+      </div>
+      <p className="hero-piece mt-16 font-display text-heading text-paper/50 italic" style={{ animationDelay: "1080ms" }}>
+        Don't just dream it. Mode it.
+      </p>
     </div>
   );
 }
 
 function ActionWords() {
   const ref = useRef(null);
+  const stageRef = useRef(null);
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -33,7 +93,9 @@ function ActionWords() {
       const span = rect.height - window.innerHeight;
       if (span <= 0) return;
       const progress = Math.min(Math.max(-rect.top / span, 0), 0.9999);
-      setIndex(Math.floor(progress * actionWords.length));
+      const next = Math.min(Math.floor(progress * actionWords.length), actionWords.length - 1);
+      setIndex((current) => (current === next ? current : next));
+      stageRef.current?.style.setProperty("--p", progress.toFixed(4));
     };
     update();
     window.addEventListener("scroll", update, { passive: true });
@@ -46,7 +108,14 @@ function ActionWords() {
 
   return (
     <section ref={ref} className="relative bg-ink text-paper" style={{ height: "500vh" }}>
-      <div className="sticky top-0 flex h-screen items-center overflow-hidden px-6 md:px-12">
+      <div ref={stageRef} className="action-stage sticky top-0 flex h-screen items-center overflow-hidden px-6 md:px-12">
+        <div className="scroll-cue" aria-hidden="true">
+          <span className="scroll-cue-label">Scroll</span>
+          <div className="scroll-cue-track">
+            <div className="scroll-cue-fill" />
+            <div className="scroll-cue-thumb" />
+          </div>
+        </div>
         <div className="mx-auto grid w-full max-w-6xl items-center gap-16 lg:grid-cols-2">
           <div>
             <div className="flex items-center gap-4">
@@ -83,7 +152,7 @@ function ActionWords() {
             </ol>
           </div>
           <div className="pointer-events-none order-first h-[36vh] lg:order-last lg:h-[70vh]">
-            <Diamond key={index} step={index} />
+            <EvolvingMark />
           </div>
         </div>
       </div>
@@ -105,39 +174,7 @@ export function HomePage() {
           className="hero-drift absolute inset-0 -z-10 h-full w-full object-cover"
         />
         <div className="absolute inset-0 -z-10 bg-ink/45" />
-        <div className="mx-auto flex w-full max-w-4xl flex-col items-center">
-          <Reveal>
-            <div className="flex justify-center">
-              <Eyebrow>Calgary, Alberta — Nonprofit Society</Eyebrow>
-            </div>
-          </Reveal>
-          <Reveal delay={140}>
-            <h1 className="mt-10 font-display text-hero">
-              CONNECT.
-              <br />
-              SPEAK. WALK.
-              <br />
-              <span className="text-gilt">LEAD. INSPIRE.</span>
-            </h1>
-          </Reveal>
-          <Reveal delay={280}>
-            <p className="mt-10 max-w-xl text-paper/75">
-              Creating opportunities for children, teens, adults, parents, families, entrepreneurs and community members to
-              learn, participate, connect and grow.
-            </p>
-          </Reveal>
-          <Reveal delay={420}>
-            <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button to="/contact">Join IQ-Mode</Button>
-              <Button to="/contact" tone="ghost">
-                Get Involved
-              </Button>
-            </div>
-          </Reveal>
-          <Reveal delay={560}>
-            <p className="mt-16 font-display text-heading text-paper/50 italic">Don't just dream it. Mode it.</p>
-          </Reveal>
-        </div>
+        <HeroEntrance />
       </section>
 
       <Section>
