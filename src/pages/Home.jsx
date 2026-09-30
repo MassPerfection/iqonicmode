@@ -8,15 +8,15 @@ import {
 } from "../content";
 import { Button, Card, Eyebrow, Reveal, Section, SectionHeading, usePageMeta } from "../components/ui";
 
-function Diamond() {
+function Diamond({ step }) {
+  const turn = step * 72;
+
   return (
-    <div className="relative flex h-full w-full items-center justify-center">
-      <div className="absolute h-56 w-56 rounded-full border border-gilt/50 md:h-72 md:w-72" />
-      <div className="absolute h-72 w-72 rounded-full border border-gold/30 md:h-96 md:w-96" />
-      <div
-        className="h-28 w-28 rotate-45 bg-gradient-to-br from-gilt to-gold md:h-36 md:w-36"
-        style={{ clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" }}
-      />
+    <div className="mark" style={{ "--turn": `${turn}deg` }}>
+      <div className="mark-glow" />
+      <div className="mark-ring mark-ring--outer" />
+      <div className="mark-ring mark-ring--inner" />
+      <div className="mark-gem" />
     </div>
   );
 }
@@ -53,7 +53,7 @@ function ActionWords() {
               <span className="rule-gold" />
               <span className="eyebrow">The five action words</span>
             </div>
-            <ol className="mt-14 space-y-6 md:space-y-8">
+            <ol className="mt-10 space-y-4 md:space-y-5">
               {actionWords.map((item, itemIndex) => {
                 const active = itemIndex === index;
                 return (
@@ -65,25 +65,25 @@ function ActionWords() {
                     <div className="flex items-baseline gap-5">
                       <span className="text-micro tracking-[0.3em] text-gold tabular-nums">0{itemIndex + 1}</span>
                       <h2
-                        className="font-display text-hero leading-none transition-colors duration-700"
+                        className="font-display text-[clamp(2.4rem,6vw,4.6rem)] leading-none transition-colors duration-700"
                         style={{ color: active ? "var(--color-gilt)" : "var(--color-paper)" }}
                       >
                         {item.word}
                       </h2>
                     </div>
-                    <p
-                      className="mt-2 ml-[3.1rem] text-paper/70 transition-all duration-700"
-                      style={{ maxHeight: active ? "4rem" : 0, opacity: active ? 1 : 0, overflow: "hidden" }}
+                    <div
+                      className="grid transition-[grid-template-rows,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                      style={{ gridTemplateRows: active ? "1fr" : "0fr", opacity: active ? 1 : 0 }}
                     >
-                      {item.line}
-                    </p>
+                      <p className="mt-2 ml-[3.1rem] max-w-md overflow-hidden text-paper/70">{item.line}</p>
+                    </div>
                   </li>
                 );
               })}
             </ol>
           </div>
           <div className="pointer-events-none order-first h-[36vh] lg:order-last lg:h-[70vh]">
-            <Diamond />
+            <Diamond key={index} step={index} />
           </div>
         </div>
       </div>
@@ -102,7 +102,7 @@ export function HomePage() {
           alt=""
           width={1920}
           height={1080}
-          className="absolute inset-0 -z-10 h-full w-full object-cover"
+          className="hero-drift absolute inset-0 -z-10 h-full w-full object-cover"
         />
         <div className="absolute inset-0 -z-10 bg-ink/45" />
         <div className="mx-auto flex w-full max-w-4xl flex-col items-center">
@@ -160,7 +160,7 @@ export function HomePage() {
               </Button>
             </div>
           </Reveal>
-          <Reveal delay={160}>
+          <Reveal delay={160} className="overflow-hidden">
             <img
               src={images.speaking}
               alt="A young person speaking with a microphone during a community workshop"
@@ -205,7 +205,7 @@ export function HomePage() {
 
       <Section>
         <div className="grid gap-16 lg:grid-cols-[0.9fr_1fr] lg:items-center">
-          <Reveal>
+          <Reveal className="overflow-hidden">
             <img
               src={images.families}
               alt="A parent and teenager together at a community gathering"
@@ -271,7 +271,7 @@ export function HomePage() {
               </Button>
             </div>
           </Reveal>
-          <Reveal delay={160}>
+          <Reveal delay={160} className="overflow-hidden">
             <img
               src={images.entrepreneurs}
               alt="Entrepreneurs meeting and connecting at an evening community gathering"

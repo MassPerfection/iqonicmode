@@ -44,7 +44,7 @@ export function Header() {
               to={item.to}
               end={item.to === "/"}
               className={({ isActive }) =>
-                `text-micro tracking-[0.22em] uppercase transition-colors hover:text-gold ${isActive ? "text-gold" : "text-paper/70"}`
+                `nav-link text-micro tracking-[0.22em] uppercase transition-colors hover:text-gold ${isActive ? "is-active text-gold" : "text-paper/70"}`
               }
             >
               {item.label}

@@ -157,6 +157,16 @@
     transition: none;
     transform: none;
   }
+
+  .mark-glow,
+  .mark-ring,
+  .mark-gem,
+  .hero-drift,
+  .btn::after {
+    animation: none;
+    transition: none;
+    transform: none;
+  }
 }
 
 .page-shell {
@@ -189,4 +199,168 @@
   from {
     opacity: 0;
   }
+}
+
+.mark {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.mark-glow,
+.mark-ring,
+.mark-gem {
+  position: absolute;
+}
+
+.mark-glow {
+  width: 46%;
+  height: 46%;
+  border-radius: 999px;
+  background: radial-gradient(circle, color-mix(in oklab, var(--color-gilt) 42%, transparent), transparent 68%);
+  animation: mark-glow 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.mark-ring {
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--color-gilt) 55%, transparent);
+}
+
+.mark-ring--outer {
+  width: min(78%, 24rem);
+  height: min(78%, 24rem);
+  border-color: color-mix(in oklab, var(--color-gold) 32%, transparent);
+  animation: mark-ring-out 1100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.mark-ring--inner {
+  width: min(56%, 17rem);
+  height: min(56%, 17rem);
+  animation: mark-ring-in 1000ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.mark-gem {
+  width: min(28%, 8.5rem);
+  height: min(28%, 8.5rem);
+  background: linear-gradient(135deg, var(--color-gilt), var(--color-gold));
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  animation: mark-gem 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes mark-glow {
+  from {
+    opacity: 0.2;
+    transform: scale(0.7);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  to {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+}
+
+@keyframes mark-ring-out {
+  from {
+    opacity: 0.25;
+    transform: rotate(calc(var(--turn) - 70deg)) scale(0.84);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(var(--turn)) scale(1);
+  }
+}
+
+@keyframes mark-ring-in {
+  from {
+    opacity: 0.2;
+    transform: rotate(calc(var(--turn) + 80deg)) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(calc(var(--turn) * -1)) scale(1);
+  }
+}
+
+@keyframes mark-gem {
+  0% {
+    opacity: 0.4;
+    transform: rotate(calc(var(--turn) - 50deg)) scale(0.72);
+  }
+  55% {
+    opacity: 1;
+    transform: rotate(calc(var(--turn) + 8deg)) scale(1.08);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(var(--turn)) scale(1);
+  }
+}
+
+.hero-drift {
+  animation: hero-drift 26s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+
+@keyframes hero-drift {
+  from {
+    transform: scale(1.04);
+  }
+  to {
+    transform: scale(1.1) translate3d(-1.2%, -1%, 0);
+  }
+}
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -0.45rem;
+  left: 0;
+  height: 1px;
+  background: var(--color-gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-link:hover::after,
+.nav-link.is-active::after {
+  transform: scaleX(1);
+}
+
+.btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, color-mix(in oklab, white 45%, transparent) 50%, transparent 70%);
+  transform: translateX(-130%);
+  pointer-events: none;
+}
+
+.btn:hover::after {
+  transform: translateX(130%);
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+main img {
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+main section:hover img.aspect-\[4\/5\] {
+  transform: scale(1.035);
 }

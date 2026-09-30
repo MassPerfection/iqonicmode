@@ -18,11 +18,26 @@ export const nav = [
 ];
 
 export const actionWords = [
-  { word: "CONNECT", line: "Build relationships." },
-  { word: "SPEAK", line: "Find your voice." },
-  { word: "WALK", line: "Build presence." },
-  { word: "LEAD", line: "Take responsibility." },
-  { word: "INSPIRE", line: "Encourage others." },
+  {
+    word: "CONNECT",
+    line: "Youth, parents, entrepreneurs and neighbours share the same Calgary room. The relationships start here, and they last past a single workshop.",
+  },
+  {
+    word: "SPEAK",
+    line: "Practice the introduction, the story and the ask. IQ-Mode helps a voice stay steady in class, at work, and under the lights.",
+  },
+  {
+    word: "WALK",
+    line: "Presence is learned the way a runway teaches it: posture, pace and poise you can carry into ordinary rooms, not only on show day.",
+  },
+  {
+    word: "LEAD",
+    line: "Show up for the people walking with you. Make room for someone newer, and help a family or a small business take the next step.",
+  },
+  {
+    word: "INSPIRE",
+    line: "Every finished walk, talk or job should leave someone else braver. Participants, parents and partners leave ready to bring the next person in.",
+  },
 ];
 
 export const incubators = [
