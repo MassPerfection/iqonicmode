@@ -5,18 +5,6 @@
       "has": [{ "type": "host", "value": "www.iconiqmode.ca" }],
       "destination": "https://iconiqmode.ca/:path*",
       "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "iqonicmode.ca" }],
-      "destination": "https://iconiqmode.ca/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.iqonicmode.ca" }],
-      "destination": "https://iconiqmode.ca/:path*",
-      "permanent": true
     }
   ],
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
