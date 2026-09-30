@@ -8,27 +8,27 @@ import {
 } from "../content";
 import { Button, Card, Eyebrow, Reveal, Section, SectionHeading, usePageMeta } from "../components/ui";
 
-function EvolvingMark({ complete }) {
-  const sparks = Array.from({ length: 8 }, (_, index) => index * 45);
-  const finale = Array.from({ length: 14 }, (_, index) => index * (360 / 14));
+function EvolvingMark({ burstId }) {
+  const sparks = [0, 45, 90, 135, 180, 225, 270, 315];
+  const finale = Array.from({ length: 12 }, (_, index) => index * 30);
 
   return (
-    <div className={complete ? "mark mark--complete" : "mark"}>
-      <div className="mark-burst" aria-hidden="true">
+    <div className={burstId ? "mark mark--complete" : "mark"}>
+      <div className="mark-ring mark-ring--outer" />
+      <div className="mark-ring mark-ring--inner" />
+      <div className="mark-rotor" aria-hidden="true">
         {sparks.map((angle) => (
           <span key={angle} className="mark-spark" style={{ "--angle": `${angle}deg` }} />
         ))}
       </div>
-      {complete ? (
-        <div className="mark-finale" aria-hidden="true">
+      {burstId ? (
+        <div key={burstId} className="mark-finale" aria-hidden="true">
           <span className="mark-finale-glow" />
           {finale.map((angle) => (
             <span key={angle} className="mark-finale-spark" style={{ "--angle": `${angle}deg` }} />
           ))}
         </div>
       ) : null}
-      <div className="mark-ring mark-ring--outer" />
-      <div className="mark-ring mark-ring--inner" />
       <div className="mark-gem" />
     </div>
   );
@@ -99,13 +99,21 @@ function HeroEntrance() {
 function ActionWords() {
   const ref = useRef(null);
   const stageRef = useRef(null);
-  const armed = useRef(true);
+  const indexRef = useRef(0);
+  const entered = useRef(false);
   const finishTimer = useRef(0);
   const [index, setIndex] = useState(0);
-  const [complete, setComplete] = useState(false);
+  const [burstId, setBurstId] = useState(0);
   const showMark = useWideScreen(768);
 
   useEffect(() => {
+    const flash = () => {
+      if (window.innerWidth < 768 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      setBurstId((current) => current + 1);
+      window.clearTimeout(finishTimer.current);
+      finishTimer.current = window.setTimeout(() => setBurstId(0), 520);
+    };
+
     const update = () => {
       const node = ref.current;
       if (!node) return;
@@ -113,19 +121,23 @@ function ActionWords() {
       const span = rect.height - window.innerHeight;
       if (span <= 0) return;
       const progress = Math.min(Math.max(-rect.top / span, 0), 0.9999);
-      const next = Math.min(Math.floor(progress * actionWords.length), actionWords.length - 1);
-      setIndex((current) => (current === next ? current : next));
       stageRef.current?.style.setProperty("--p", progress.toFixed(4));
 
-      const finished = progress >= 0.985;
-      const motionOk = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (finished && armed.current && motionOk && window.innerWidth >= 768) {
-        armed.current = false;
-        setComplete(true);
-        window.clearTimeout(finishTimer.current);
-        finishTimer.current = window.setTimeout(() => setComplete(false), 520);
-      } else if (progress < 0.9) {
-        armed.current = true;
+      if (progress <= 0.001) {
+        if (entered.current) {
+          entered.current = false;
+          indexRef.current = 0;
+          setIndex(0);
+        }
+        return;
+      }
+
+      const next = Math.min(Math.floor(progress * actionWords.length), actionWords.length - 1);
+      if (!entered.current || next !== indexRef.current) {
+        entered.current = true;
+        indexRef.current = next;
+        setIndex(next);
+        flash();
       }
     };
     update();
@@ -184,8 +196,8 @@ function ActionWords() {
             </ol>
           </div>
           {showMark ? (
-            <div className="action-mark pointer-events-none h-[36vh] lg:order-last lg:h-[70vh]">
-              <EvolvingMark complete={complete} />
+            <div className="action-mark pointer-events-none flex h-[36vh] items-center justify-center lg:order-last lg:h-[70vh]">
+              <EvolvingMark burstId={burstId} />
             </div>
           ) : null}
         </div>

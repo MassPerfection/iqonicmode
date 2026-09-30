@@ -160,6 +160,7 @@
 
   .mark-ring,
   .mark-gem,
+  .mark-rotor,
   .hero-drift,
   .btn::after,
   .hero-piece,
@@ -177,6 +178,11 @@
   .fireworks,
   .mark-finale {
     display: none;
+  }
+
+  .mark-gem,
+  .mark-rotor {
+    rotate: none;
   }
 }
 
@@ -266,14 +272,16 @@
   top: calc(var(--p) * 100%);
 }
 
+.action-mark {
+  container-type: size;
+}
+
 .mark {
   --p: inherit;
   position: relative;
-  display: flex;
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
+  width: min(100cqw, 100cqh);
+  aspect-ratio: 1;
+  container-type: size;
 }
 
 .mark-ring,
@@ -297,8 +305,8 @@
 .mark-finale-glow {
   top: 0;
   left: 0;
-  width: 16rem;
-  height: 16rem;
+  width: 62cqi;
+  height: 62cqi;
   border-radius: 999px;
   background: radial-gradient(circle, color-mix(in oklab, var(--color-gilt) 72%, white) 0%, transparent 68%);
   animation: finale-glow 500ms ease-out both;
@@ -307,18 +315,14 @@
 .mark-finale-spark {
   top: 0;
   left: 0;
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
   border-radius: 999px;
   background: var(--color-gilt);
-  box-shadow: 0 0 10px var(--color-gilt);
+  box-shadow: 0 0 8px var(--color-gilt);
+  transform-origin: center;
   animation: finale-spark 500ms ease-out both;
-}
-
-.mark-finale-spark:nth-child(3n) {
-  background: white;
-  width: 4px;
-  height: 4px;
 }
 
 .mark-finale-spark:nth-child(2n) {
@@ -347,14 +351,14 @@
 @keyframes finale-spark {
   0% {
     opacity: 0;
-    transform: rotate(var(--angle)) translateY(1.5rem) scale(0.4);
+    transform: rotate(var(--angle)) translateY(8cqi) scale(0.5);
   }
   22% {
     opacity: 1;
   }
   100% {
     opacity: 0;
-    transform: rotate(var(--angle)) translateY(10rem) scale(1);
+    transform: rotate(var(--angle)) translateY(40cqi) scale(1);
   }
 }
 
@@ -368,20 +372,34 @@
   }
 }
 
-.mark-burst {
+.mark-rotor,
+.mark-finale,
+.mark-finale-glow,
+.mark-finale-spark,
+.mark-spark {
+  position: absolute;
+}
+
+.mark-rotor {
+  top: 50%;
+  left: 50%;
   width: 0;
   height: 0;
   z-index: 3;
+  rotate: calc(var(--p) * 1turn);
 }
 
 .mark-spark {
+  top: 0;
+  left: 0;
   width: 4px;
   height: 4px;
+  margin: -2px 0 0 -2px;
   border-radius: 999px;
   background: var(--color-gilt);
-  box-shadow: 0 0 4px color-mix(in oklab, var(--color-gilt) 50%, transparent);
-  opacity: clamp(0, calc((var(--p) - 0.2) * 0.9), 0.38);
-  transform: rotate(var(--angle)) translateY(calc(var(--p) * -6.5rem));
+  transform-origin: center;
+  transform: rotate(var(--angle)) translateY(-32cqi);
+  opacity: 0.7;
 }
 
 .mark-spark:nth-child(2n) {
@@ -389,31 +407,35 @@
 }
 
 .mark-ring {
+  top: 50%;
+  left: 50%;
   border-radius: 999px;
-  border: 1px solid color-mix(in oklab, var(--color-gilt) 55%, transparent);
+  translate: -50% -50%;
 }
 
 .mark-ring--inner {
-  width: min(52%, 16rem);
-  height: min(52%, 16rem);
-  opacity: clamp(0, calc((var(--p) - 0.08) * 2.6), 1);
-  transform: rotate(calc(var(--p) * -140deg)) scale(calc(0.72 + var(--p) * 0.28));
+  width: 50cqi;
+  height: 50cqi;
+  border: 1px solid color-mix(in oklab, var(--color-gilt) 55%, transparent);
+  rotate: calc(var(--p) * -1turn);
 }
 
 .mark-ring--outer {
-  width: min(76%, 23rem);
-  height: min(76%, 23rem);
-  border-color: color-mix(in oklab, var(--color-gold) 34%, transparent);
-  opacity: clamp(0, calc((var(--p) - 0.22) * 2.3), 1);
-  transform: rotate(calc(var(--p) * 180deg)) scale(calc(0.78 + var(--p) * 0.24));
+  width: 78cqi;
+  height: 78cqi;
+  border: 1px solid color-mix(in oklab, var(--color-gold) 40%, transparent);
+  rotate: calc(var(--p) * 1turn);
 }
 
 .mark-gem {
-  width: min(22%, 7rem);
-  height: min(22%, 7rem);
+  top: 50%;
+  left: 50%;
+  width: 16cqi;
+  height: 16cqi;
   background: linear-gradient(135deg, var(--color-gilt), var(--color-gold));
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-  transform: rotate(calc(var(--p) * 220deg)) scale(calc(0.7 + var(--p) * 0.38));
+  translate: -50% -50%;
+  rotate: calc(var(--p) * 1turn);
   z-index: 2;
 }
 
