@@ -279,22 +279,48 @@
 .mark-glow,
 .mark-ring,
 .mark-gem,
+.mark-burst,
+.mark-spark,
 .runway,
-.mark-orbit,
-.orbit-slot,
-.runway-walker,
 .runway-spot,
 .runway-floor {
   position: absolute;
 }
 
 .mark-glow {
-  width: 46%;
-  height: 46%;
+  width: 72%;
+  height: 72%;
   border-radius: 999px;
-  background: radial-gradient(circle, color-mix(in oklab, var(--color-gilt) 48%, transparent), transparent 68%);
-  opacity: clamp(0, calc((var(--p) - 0.04) * 2.2), 0.95);
-  transform: scale(calc(0.55 + var(--p) * 0.7));
+  background: radial-gradient(circle, color-mix(in oklab, var(--color-gilt) 62%, white) 0%, transparent 70%);
+  opacity: clamp(0, calc((var(--p) - 0.02) * 1.8), 1);
+  transform: scale(calc(0.45 + var(--p) * 0.9));
+  filter: blur(2px);
+}
+
+.mark-burst {
+  width: 0;
+  height: 0;
+  z-index: 3;
+}
+
+.mark-spark {
+  width: calc(4px + var(--p) * 8px);
+  height: calc(4px + var(--p) * 8px);
+  border-radius: 999px;
+  background: var(--color-gilt);
+  box-shadow:
+    0 0 10px var(--color-gilt),
+    0 0 22px color-mix(in oklab, var(--color-gold) 70%, white);
+  opacity: clamp(0, calc((var(--p) - 0.1) * 1.7), 1);
+  transform: rotate(var(--angle)) translateY(calc(var(--p) * -13rem)) scale(calc(0.4 + var(--p)));
+}
+
+.mark-spark:nth-child(3n) {
+  background: white;
+}
+
+.mark-spark:nth-child(2n) {
+  background: var(--color-gold);
 }
 
 .mark-ring {
@@ -322,35 +348,9 @@
   height: min(22%, 7rem);
   background: linear-gradient(135deg, var(--color-gilt), var(--color-gold));
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  filter: drop-shadow(0 0 calc(8px + var(--p) * 36px) var(--color-gilt));
   transform: rotate(calc(var(--p) * 220deg)) scale(calc(0.7 + var(--p) * 0.38));
   z-index: 2;
-}
-
-.mark-orbit {
-  width: min(68%, 20rem);
-  height: min(68%, 20rem);
-  opacity: clamp(0, calc((var(--p) - 0.34) * 2.5), 1);
-  transform: rotate(calc(var(--p) * 70deg));
-}
-
-.orbit-slot {
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  transform: rotate(var(--orbit)) translateY(-8.5rem);
-}
-
-.orbit-letter {
-  display: grid;
-  width: 1.7rem;
-  height: 1.7rem;
-  transform: translate(-50%, -50%) rotate(calc(var(--orbit) * -1 - var(--p) * 70deg));
-  place-items: center;
-  color: var(--color-gilt);
-  font-family: var(--font-display);
-  font-size: 1rem;
-  letter-spacing: 0.04em;
 }
 
 .runway {
@@ -372,23 +372,13 @@
 .runway-spot {
   top: 8%;
   left: 50%;
-  width: 34%;
-  height: 22%;
+  width: 46%;
+  height: 30%;
   transform: translateX(-50%);
   border-radius: 999px;
-  background: radial-gradient(circle, color-mix(in oklab, var(--color-gilt) 70%, transparent), transparent 70%);
-  opacity: clamp(0, calc((var(--p) - 0.62) * 3), 1);
-}
-
-.runway-walker {
-  left: 50%;
-  width: 0.85rem;
-  height: 0.85rem;
-  background: var(--color-gilt);
-  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-  top: calc(22% + var(--p) * 46%);
-  transform: translateX(-50%) rotate(45deg);
-  box-shadow: 0 0 16px color-mix(in oklab, var(--color-gilt) 70%, transparent);
+  background: radial-gradient(circle, color-mix(in oklab, var(--color-gilt) 80%, white), transparent 70%);
+  opacity: clamp(0, calc((var(--p) - 0.55) * 2.4), 1);
+  filter: blur(1px);
 }
 
 .hero-copy {
@@ -430,10 +420,11 @@
   0% {
     text-shadow: 0 0 0 transparent;
   }
-  28% {
+  30% {
     text-shadow:
-      0 0 12px color-mix(in oklab, var(--color-gilt) 90%, white),
-      0 0 28px color-mix(in oklab, var(--color-gold) 80%, transparent);
+      0 0 18px white,
+      0 0 42px color-mix(in oklab, var(--color-gilt) 90%, white),
+      0 0 90px color-mix(in oklab, var(--color-gold) 85%, transparent);
   }
   100% {
     text-shadow: 0 0 0 transparent;
@@ -452,18 +443,20 @@
 
 .spark {
   position: absolute;
-  width: 5px;
-  height: 5px;
+  width: 10px;
+  height: 10px;
   border-radius: 999px;
   background: var(--color-gilt);
-  box-shadow: 0 0 10px var(--color-gilt);
-  animation: spark-fly 1.35s ease-out var(--delay) both;
+  box-shadow:
+    0 0 14px white,
+    0 0 28px var(--color-gilt);
+  animation: spark-fly 1.7s ease-out var(--delay) both;
 }
 
 .spark:nth-child(3n) {
   background: white;
-  width: 3px;
-  height: 3px;
+  width: 7px;
+  height: 7px;
 }
 
 .spark:nth-child(2n) {
@@ -480,7 +473,7 @@
   }
   100% {
     opacity: 0;
-    transform: rotate(var(--angle)) translateY(calc(var(--distance) * -1)) scale(1);
+    transform: rotate(var(--angle)) translateY(calc(var(--distance) * -1.35)) scale(1.35);
   }
 }
 

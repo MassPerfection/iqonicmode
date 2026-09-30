@@ -8,36 +8,33 @@ import {
 } from "../content";
 import { Button, Card, Eyebrow, Reveal, Section, SectionHeading, usePageMeta } from "../components/ui";
 
-const orbitLetters = ["C", "S", "W", "L", "I"];
-
 function EvolvingMark() {
+  const sparks = Array.from({ length: 18 }, (_, index) => index * 20);
+
   return (
     <div className="mark">
       <div className="runway" aria-hidden="true">
         <span className="runway-floor" />
-        <span className="runway-walker" />
         <span className="runway-spot" />
       </div>
       <div className="mark-glow" />
-      <div className="mark-ring mark-ring--outer" />
-      <div className="mark-ring mark-ring--inner" />
-      <div className="mark-orbit" aria-hidden="true">
-        {orbitLetters.map((letter, letterIndex) => (
-          <span key={letter} className="orbit-slot" style={{ "--orbit": `${letterIndex * 72}deg` }}>
-            <span className="orbit-letter">{letter}</span>
-          </span>
+      <div className="mark-burst" aria-hidden="true">
+        {sparks.map((angle) => (
+          <span key={angle} className="mark-spark" style={{ "--angle": `${angle}deg` }} />
         ))}
       </div>
+      <div className="mark-ring mark-ring--outer" />
+      <div className="mark-ring mark-ring--inner" />
       <div className="mark-gem" />
     </div>
   );
 }
 
 function HeroEntrance() {
-  const sparks = Array.from({ length: 16 }, (_, index) => ({
-    angle: index * 22.5,
-    delay: 280 + (index % 8) * 70,
-    distance: 90 + (index % 5) * 36,
+  const sparks = Array.from({ length: 28 }, (_, index) => ({
+    angle: index * (360 / 28),
+    delay: 180 + (index % 7) * 90,
+    distance: 160 + (index % 7) * 48,
   }));
 
   return (
