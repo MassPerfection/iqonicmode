@@ -9,7 +9,7 @@ import {
 import { Button, Card, Eyebrow, Reveal, Section, SectionHeading, usePageMeta } from "../components/ui";
 
 function EvolvingMark() {
-  const sparks = Array.from({ length: 18 }, (_, index) => index * 20);
+  const sparks = Array.from({ length: 8 }, (_, index) => index * 45);
 
   return (
     <div className="mark">

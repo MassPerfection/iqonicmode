@@ -288,13 +288,13 @@
 }
 
 .mark-glow {
-  width: 72%;
-  height: 72%;
+  width: 46%;
+  height: 46%;
   border-radius: 999px;
-  background: radial-gradient(circle, color-mix(in oklab, var(--color-gilt) 62%, white) 0%, transparent 70%);
-  opacity: clamp(0, calc((var(--p) - 0.02) * 1.8), 1);
-  transform: scale(calc(0.45 + var(--p) * 0.9));
-  filter: blur(2px);
+  background: radial-gradient(circle, color-mix(in oklab, var(--color-gilt) 28%, transparent) 0%, transparent 68%);
+  opacity: clamp(0, calc((var(--p) - 0.12) * 1.1), 0.42);
+  transform: scale(calc(0.7 + var(--p) * 0.25));
+  filter: blur(8px);
 }
 
 .mark-burst {
@@ -304,19 +304,13 @@
 }
 
 .mark-spark {
-  width: calc(4px + var(--p) * 8px);
-  height: calc(4px + var(--p) * 8px);
+  width: 4px;
+  height: 4px;
   border-radius: 999px;
   background: var(--color-gilt);
-  box-shadow:
-    0 0 10px var(--color-gilt),
-    0 0 22px color-mix(in oklab, var(--color-gold) 70%, white);
-  opacity: clamp(0, calc((var(--p) - 0.1) * 1.7), 1);
-  transform: rotate(var(--angle)) translateY(calc(var(--p) * -13rem)) scale(calc(0.4 + var(--p)));
-}
-
-.mark-spark:nth-child(3n) {
-  background: white;
+  box-shadow: 0 0 4px color-mix(in oklab, var(--color-gilt) 50%, transparent);
+  opacity: clamp(0, calc((var(--p) - 0.2) * 0.9), 0.38);
+  transform: rotate(var(--angle)) translateY(calc(var(--p) * -6.5rem));
 }
 
 .mark-spark:nth-child(2n) {
@@ -348,7 +342,7 @@
   height: min(22%, 7rem);
   background: linear-gradient(135deg, var(--color-gilt), var(--color-gold));
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-  filter: drop-shadow(0 0 calc(8px + var(--p) * 36px) var(--color-gilt));
+  filter: drop-shadow(0 0 calc(4px + var(--p) * 8px) color-mix(in oklab, var(--color-gilt) 45%, transparent));
   transform: rotate(calc(var(--p) * 220deg)) scale(calc(0.7 + var(--p) * 0.38));
   z-index: 2;
 }
@@ -365,20 +359,20 @@
   width: 78%;
   height: 72%;
   transform: translateX(-50%);
-  background: linear-gradient(to bottom, transparent, color-mix(in oklab, var(--color-gold) 18%, transparent) 30%, color-mix(in oklab, var(--color-gilt) 55%, transparent));
+  background: linear-gradient(to bottom, transparent, color-mix(in oklab, var(--color-gold) 10%, transparent) 36%, color-mix(in oklab, var(--color-gilt) 32%, transparent));
   clip-path: polygon(46% 0, 54% 0, 92% 100%, 8% 100%);
 }
 
 .runway-spot {
   top: 8%;
   left: 50%;
-  width: 46%;
-  height: 30%;
+  width: 28%;
+  height: 18%;
   transform: translateX(-50%);
   border-radius: 999px;
-  background: radial-gradient(circle, color-mix(in oklab, var(--color-gilt) 80%, white), transparent 70%);
-  opacity: clamp(0, calc((var(--p) - 0.55) * 2.4), 1);
-  filter: blur(1px);
+  background: radial-gradient(circle, color-mix(in oklab, var(--color-gilt) 40%, transparent), transparent 70%);
+  opacity: clamp(0, calc((var(--p) - 0.55) * 1.4), 0.55);
+  filter: blur(6px);
 }
 
 .hero-copy {
