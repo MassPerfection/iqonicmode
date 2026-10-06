@@ -91,8 +91,8 @@ function CheckItem({ id, checked, onChange, children }) {
   );
 }
 
-export function RegistrationPage() {
-  usePageMeta("Registration | ICONIQMode Leadership and Modeling Centre Society");
+export function ContactPage() {
+  usePageMeta("Contact | ICONIQMode Leadership and Modeling Centre Society");
 
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState([]);
@@ -258,13 +258,18 @@ export function RegistrationPage() {
     <>
       <section className="bg-ink px-6 pt-40 pb-20 text-paper md:px-12 md:pb-28">
         <div className="mx-auto w-full max-w-4xl">
-          <Eyebrow>Document No. IQM-REG-001 · Version 1.0</Eyebrow>
+          <Eyebrow>Contact & registration</Eyebrow>
           <h1 className="mt-8 text-title">Registration & Participation Agreement</h1>
           <p className="mt-7 max-w-2xl text-paper/70">
-            ICONIQMode Leadership and Modeling Centre Society. Complete this form to register as a participant. Please
-            read every section carefully before accepting.
+            ICONIQMode Leadership and Modeling Centre Society. Use this page to register as a participant, or email{" "}
+            <a className="text-gold underline-offset-4 hover:underline" href="mailto:iconiqmodesociety@gmail.com">
+              iconiqmodesociety@gmail.com
+            </a>
+            . Please read every section carefully before accepting.
           </p>
-          <p className="mt-6 text-micro tracking-[0.22em] text-gold uppercase">Connect. Speak. Walk. Lead. Inspire.</p>
+          <p className="mt-6 text-micro tracking-[0.22em] text-gold uppercase">
+            Document No. IQM-REG-001 · Version 1.0 · Connect. Speak. Walk. Lead. Inspire.
+          </p>
         </div>
       </section>
 

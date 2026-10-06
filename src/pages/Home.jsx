@@ -84,7 +84,7 @@ function HeroEntrance() {
         participate, connect and grow.
       </p>
       <div className="hero-piece mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row" style={{ animationDelay: "860ms" }}>
-        <Button to="/registration">Join IQ-Mode</Button>
+        <Button to="/contact">Join IQ-Mode</Button>
         <Button to="/contact" tone="ghost">
           Get Involved
         </Button>

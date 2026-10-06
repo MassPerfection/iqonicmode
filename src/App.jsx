@@ -3,12 +3,12 @@ import { flushSync } from "react-dom";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Footer, Header } from "./components/Layout";
 import { AboutPage } from "./pages/About";
+import { ContactPage } from "./pages/Contact";
 import { EventsPage } from "./pages/Events";
 import { FamiliesPage } from "./pages/Families";
 import { HomePage } from "./pages/Home";
 import { IncubatorsPage } from "./pages/Incubators";
 import { NotFoundPage } from "./pages/NotFound";
-import { RegistrationPage } from "./pages/Registration";
 
 function useDisplayedLocation() {
   const location = useLocation();
@@ -67,7 +67,7 @@ export default function App() {
             <Route path="/incubators" element={<IncubatorsPage />} />
             <Route path="/families" element={<FamiliesPage />} />
             <Route path="/events" element={<EventsPage />} />
-            <Route path="/registration" element={<RegistrationPage />} />
+            <Route path="/contact" element={<ContactPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
