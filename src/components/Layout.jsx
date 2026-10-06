@@ -88,6 +88,7 @@ export function Footer() {
     { to: "/incubators", label: "Our Incubators" },
     { to: "/families", label: "For Families" },
     { to: "/events", label: "Events" },
+    { to: "/registration", label: "Register" },
     { to: "/contact", label: "Contact" },
   ];
 

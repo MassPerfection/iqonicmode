@@ -40,7 +40,7 @@ export function IncubatorsPage() {
         <Reveal>
           <h2 className="max-w-3xl text-title">Find the incubator that fits you.</h2>
           <div className="mt-11 flex flex-col gap-4 sm:flex-row">
-            <Button to="/contact">Join IQ-Mode</Button>
+            <Button to="/registration">Join IQ-Mode</Button>
             <Button to="/events" tone="ghost">
               See what's coming up
             </Button>

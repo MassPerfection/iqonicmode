@@ -8,6 +8,7 @@ import { FamiliesPage } from "./pages/Families";
 import { HomePage } from "./pages/Home";
 import { IncubatorsPage } from "./pages/Incubators";
 import { NotFoundPage } from "./pages/NotFound";
+import { RegistrationPage } from "./pages/Registration";
 
 function useDisplayedLocation() {
   const location = useLocation();
@@ -66,6 +67,7 @@ export default function App() {
             <Route path="/incubators" element={<IncubatorsPage />} />
             <Route path="/families" element={<FamiliesPage />} />
             <Route path="/events" element={<EventsPage />} />
+            <Route path="/registration" element={<RegistrationPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>

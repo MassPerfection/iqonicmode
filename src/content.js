@@ -14,6 +14,7 @@ export const nav = [
   { to: "/incubators", label: "Incubators" },
   { to: "/families", label: "Families" },
   { to: "/events", label: "Events" },
+  { to: "/registration", label: "Register" },
   { to: "/contact", label: "Contact" },
 ];
 
