@@ -2,12 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Footer, Header } from "./components/Layout";
+import { MAINTENANCE_MODE } from "./config";
 import { AboutPage } from "./pages/About";
 import { ContactPage } from "./pages/Contact";
 import { EventsPage } from "./pages/Events";
 import { FamiliesPage } from "./pages/Families";
 import { HomePage } from "./pages/Home";
 import { IncubatorsPage } from "./pages/Incubators";
+import { MaintenancePage } from "./pages/Maintenance";
 import { NotFoundPage } from "./pages/NotFound";
 
 function useDisplayedLocation() {
@@ -55,6 +57,10 @@ function useDisplayedLocation() {
 
 export default function App() {
   const location = useDisplayedLocation();
+
+  if (MAINTENANCE_MODE) {
+    return <MaintenancePage />;
+  }
 
   return (
     <>
